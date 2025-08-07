@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Caption and Hashtag Generator</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram Caption and Hashtag Generator</h1>
+        <form method="POST" action="{{ url_for('index') }}">
+            <label for="input_text">Enter your post idea or description</label>
+            <textarea name="input_text" id="input_text" rows="4" cols="50" required>{{ input_text|default('') }}</textarea>
+            <button type="submit">Generate</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="result">
+              {% for category, message in messages %}
+                <p class="flash-message {% if category == 'danger' %}danger{% elif category == 'warning' %}warning{% else %}success{% endif %}">{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        {% if description %}
+            <div class="result">
+                <h2>Generated Caption & Hashtags</h2>
+                <pre>{{ description }}</pre>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
